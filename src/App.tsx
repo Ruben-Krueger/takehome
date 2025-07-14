@@ -1,16 +1,29 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './pages/Dashboards';
+import Charts from './pages/Charts';
+import Home from './pages/Home';
+import { Footer } from './components/ui/footer';
+import { FontSizeProvider } from './contexts/FontSizeContext';
+import Header from './components/ui/header';
 
 function App() {
   return (
-    <main>
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-4xl text-black">Welcome to Miracle</h1>
-        <p className="text-xl text-gray-600 mt-2 mb-6">
-          Get actionable insights from clinical trials
-        </p>
-        <p>todo</p>
-      </div>
-    </main>
+    <FontSizeProvider>
+      <Router>
+        <Header />
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+          <main className="flex-1 container mx-auto px-4 py-8">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/charts" element={<Charts />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </FontSizeProvider>
   );
 }
 
