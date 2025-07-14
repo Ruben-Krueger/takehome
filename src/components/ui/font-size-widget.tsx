@@ -1,7 +1,6 @@
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Type, Plus, Minus } from 'lucide-react';
+import { Type } from 'lucide-react';
 import { useFontSize, FontSize } from '@/contexts/FontSizeContext';
 import assertExhaustiveSwitchError from '@/lib/assertExhaustiveSwitchError';
 
@@ -56,34 +55,7 @@ export default function FontSizeWidget() {
               key={ft}
             />
           ))}
-          {/* <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setFontSize('small')}
-            className={`h-8 w-8 p-0 ${fontSize === 'small' ? 'bg-blue-100 border-blue-300' : ''}`}
-          >
-            <span className="text-sm">A</span>
-          </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setFontSize('medium')}
-            className={`h-8 w-8 p-0 ${fontSize === 'medium' ? 'bg-blue-100 border-blue-300' : ''}`}
-          >
-            <span className="text-base">A</span>
-          </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setFontSize('large')}
-            className={`h-8 w-8 p-0 ${fontSize === 'large' ? 'bg-blue-100 border-blue-300' : ''}`}
-          >
-            <span className="text-lg">A</span>
-          </Button> */}
         </div>
-
         <Badge variant="secondary" className="text-xs">
           {fontSize}
         </Badge>

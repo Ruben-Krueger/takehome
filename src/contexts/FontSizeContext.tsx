@@ -6,11 +6,13 @@ import React, {
   type ReactNode,
 } from 'react';
 
-export enum FontSize {
-  small = 'sm',
-  medium = 'md',
-  large = 'lg',
-}
+export const FontSize = {
+  small: 'sm',
+  medium: 'md',
+  large: 'lg',
+} as const;
+
+export type FontSize = (typeof FontSize)[keyof typeof FontSize];
 
 interface FontSizeContextType {
   fontSize: FontSize;
@@ -24,34 +26,34 @@ const FontSizeContext = createContext<FontSizeContextType | undefined>(
 // CSS custom property mappings
 const fontSizeMap = {
   sm: {
-    '--font-size-xs': '0.625rem', // 10px
-    '--font-size-sm': '0.75rem', // 12px
-    '--font-size-base': '0.875rem', // 14px
-    '--font-size-lg': '1rem', // 16px
-    '--font-size-xl': '1.125rem', // 18px
-    '--font-size-2xl': '1.25rem', // 20px
-    '--font-size-3xl': '1.5rem', // 24px
-    '--font-size-4xl': '1.875rem', // 30px
+    '--text-xs': '0.625rem', // 10px
+    '--text-sm': '0.75rem', // 12px
+    '--text-base': '0.875rem', // 14px
+    '--text-lg': '1rem', // 16px
+    '--text-xl': '1.125rem', // 18px
+    '--text-2xl': '1.25rem', // 20px
+    '--text-3xl': '1.5rem', // 24px
+    '--text-4xl': '1.875rem', // 30px
   },
   md: {
-    '--font-size-xs': '0.75rem', // 12px
-    '--font-size-sm': '0.875rem', // 14px
-    '--font-size-base': '1rem', // 16px (default)
-    '--font-size-lg': '1.125rem', // 18px
-    '--font-size-xl': '1.25rem', // 20px
-    '--font-size-2xl': '1.5rem', // 24px
-    '--font-size-3xl': '1.875rem', // 30px
-    '--font-size-4xl': '2.25rem', // 36px
+    '--text-xs': '0.75rem', // 12px
+    '--text-sm': '0.875rem', // 14px
+    '--text-base': '1rem', // 16px (default)
+    '--text-lg': '1.125rem', // 18px
+    '--text-xl': '1.25rem', // 20px
+    '--text-2xl': '1.5rem', // 24px
+    '--text-3xl': '1.875rem', // 30px
+    '--text-4xl': '2.25rem', // 36px
   },
   lg: {
-    '--font-size-xs': '0.875rem', // 14px
-    '--font-size-sm': '1rem', // 16px
-    '--font-size-base': '1.125rem', // 18px
-    '--font-size-lg': '1.25rem', // 20px
-    '--font-size-xl': '1.5rem', // 24px
-    '--font-size-2xl': '1.875rem', // 30px
-    '--font-size-3xl': '2.25rem', // 36px
-    '--font-size-4xl': '2.75rem', // 44px
+    '--text-xs': '0.875rem', // 14px
+    '--text-sm': '1rem', // 16px
+    '--text-base': '1.125rem', // 18px
+    '--text-lg': '1.25rem', // 20px
+    '--text-xl': '1.5rem', // 24px
+    '--text-2xl': '1.875rem', // 30px
+    '--text-3xl': '2.25rem', // 36px
+    '--text-4xl': '2.75rem', // 44px
   },
 };
 

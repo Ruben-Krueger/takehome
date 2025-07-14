@@ -5,7 +5,7 @@ export default function Home() {
       <p className="text-xl text-gray-600 mt-2 mb-6 text-center">
         Get actionable insights from clinical trials
       </p>
-      <p className="text-gray-500">
+      <p className="text-gray-500 text-base">
         Select a page from the navigation above to get started
       </p>
     </div>
