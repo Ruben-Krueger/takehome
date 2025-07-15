@@ -30,12 +30,6 @@ const DEFAULT_LAYOUT: DashboardLayout = {
       position: { x: 0, y: 3 },
       size: { width: 1, height: 1 },
     },
-    {
-      id: 'all-studies-table',
-      type: 'AllStudiesTable',
-      position: { x: 0, y: 4 },
-      size: { width: 2, height: 1 },
-    },
   ],
   createdAt: new Date(),
   updatedAt: new Date(),

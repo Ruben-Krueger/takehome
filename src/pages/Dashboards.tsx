@@ -9,7 +9,6 @@ import { FiltersPanel } from '@/components/FiltersPanel';
 import TrialCount from '@/components/charts/TrialCountChart';
 import ConditionsChart from '@/components/charts/ConditionsChart';
 import RegionChart from '@/components/charts/RegionChart';
-import { AllStudiesTable } from '@/components/charts/AllStudiesTable';
 import StartDateChart from '@/components/charts/StartDateChart';
 import SmartClassificationChart from '@/components/charts/SmartClassificationChart';
 import SmartOverviewClassificationChart from '@/components/charts/SmartOverviewClassificationChart';
@@ -22,7 +21,6 @@ const CHART_COMPONENTS = {
   TrialCount,
   ConditionsChart,
   RegionChart,
-  AllStudiesTable,
   StartDateChart,
   SmartClassificationChart,
   SmartTherapeuticClassificationChart,
@@ -36,7 +34,6 @@ const AVAILABLE_CHARTS: { type: ChartType; label: string }[] = [
   { type: 'TrialCount', label: 'Trial Count' },
   { type: 'ConditionsChart', label: 'Conditions Chart' },
   { type: 'RegionChart', label: 'Region Chart' },
-  { type: 'AllStudiesTable', label: 'All Studies Table' },
   { type: 'StartDateChart', label: 'Start Date' },
   {
     type: 'SmartPhaseClassificationChart',
@@ -188,9 +185,7 @@ export default function Dashboard() {
           return (
             <div
               key={widget.id}
-              className={`relative group ${
-                widget.type === 'AllStudiesTable' ? 'col-span-full' : ''
-              } ${layout.isDefault ? 'cursor-default' : 'cursor-move'}`}
+              className={`relative group ${layout.isDefault ? 'cursor-default' : 'cursor-move'}`}
               draggable={!layout.isDefault}
               onDragStart={e => handleDragStart(e, widget.id)}
               onDragOver={handleDragOver}

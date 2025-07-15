@@ -4,7 +4,6 @@ export interface ChartWidget {
     | 'TrialCount'
     | 'ConditionsChart'
     | 'RegionChart'
-    | 'AllStudiesTable'
     | 'StartDateChart'
     | 'SmartPhaseClassificationChart'
     | 'SmartTherapeuticClassificationChart'

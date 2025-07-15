@@ -7,7 +7,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   type SortingState,
   useReactTable,
@@ -49,7 +48,7 @@ export const columns: ColumnDef<StudyData>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="font-mono text-sm">{row.getValue('id')}</div>
+      <div className="font-mono text-sm w-24">{row.getValue('id')}</div>
     ),
   },
   {
@@ -66,7 +65,7 @@ export const columns: ColumnDef<StudyData>[] = [
     cell: ({ row }) => {
       const title: string = row.getValue('title');
       return (
-        <div className="max-w-md truncate" title={title}>
+        <div className="max-w-xs truncate" title={title}>
           {title}
         </div>
       );
@@ -79,13 +78,7 @@ export const columns: ColumnDef<StudyData>[] = [
       <div className="capitalize">{row.getValue('source')}</div>
     ),
   },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('status')}</div>
-    ),
-  },
+
   {
     accessorKey: 'sponsor',
     header: ({ column }) => (
@@ -100,7 +93,7 @@ export const columns: ColumnDef<StudyData>[] = [
     cell: ({ row }) => {
       const sponsor: string = row.getValue('sponsor');
       return (
-        <div className="max-w-xs truncate" title={sponsor}>
+        <div className="max-w-32 truncate" title={sponsor}>
           {sponsor}
         </div>
       );
@@ -111,12 +104,12 @@ export const columns: ColumnDef<StudyData>[] = [
     header: 'Conditions',
     cell: ({ row }) => {
       const conditions: string[] = row.getValue('conditions');
-      const displayConditions = conditions.slice(0, 2).join(', ');
-      const hasMore = conditions.length > 2;
+      const displayConditions = conditions.slice(0, 1).join(', ');
+      const hasMore = conditions.length > 1;
       return (
-        <div className="max-w-xs truncate" title={conditions.join(', ')}>
+        <div className="max-w-32 truncate" title={conditions.join(', ')}>
           {displayConditions}
-          {hasMore ? ` +${conditions.length - 2} more` : ''}
+          {hasMore ? ` +${conditions.length - 1} more` : ''}
         </div>
       );
     },
@@ -173,7 +166,6 @@ export function AllStudiesTable() {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -187,46 +179,22 @@ export function AllStudiesTable() {
   });
 
   return (
-    <Card className="h-full overflow-hidden">
+    <div className="h-full overflow-hidden">
       <CardContent className="p-4 overflow-hidden">
         <div className="space-y-4">
-          <h3 className="text-lg font-medium">All Studies</h3>
-
           <div className="flex items-center py-4">
             <Input
               placeholder="Filter by title..."
-              value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+              value={
+                (table.getColumn('title')?.getFilterValue() as string) ?? ''
+              }
               onChange={event =>
                 table.getColumn('title')?.setFilterValue(event.target.value)
               }
               className="max-w-sm"
             />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
-                  Columns <ChevronDown />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter(column => column.getCanHide())
-                  .map(column => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={value => column.toggleVisibility(!!value)}
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
-                    );
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
-          <div className="rounded-md border max-h-[500px] overflow-auto">
+          <div className="rounded-md border max-h-[500px] overflow-auto overflow-x-auto">
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map(headerGroup => (
@@ -276,28 +244,8 @@ export function AllStudiesTable() {
               </TableBody>
             </Table>
           </div>
-          <div className="flex items-center justify-end space-x-2 py-4">
-            <div className="space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              >
-                Previous
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-              >
-                Next
-              </Button>
-            </div>
-          </div>
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 }

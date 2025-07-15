@@ -7,6 +7,7 @@ import TrialCount from '@/components/charts/TrialCountChart';
 import ConditionsChart from '@/components/charts/ConditionsChart';
 import RegionChart from '@/components/charts/RegionChart';
 import StartDateChart from '@/components/charts/StartDateChart';
+import { AllStudiesTable } from '@/components/charts/AllStudiesTable';
 import SmartTherapeuticClassificationChart from '@/components/charts/SmartTherapeuticClassificationChart';
 import SmartPhaseClassificationChart from '@/components/charts/SmartPhaseClassificationChart';
 import SmartTreatmentClassificationChart from '@/components/charts/SmartTreatmentClassificationChart';
@@ -25,12 +26,12 @@ function SkeletonCard() {
   );
 }
 
-export default function Charts(): JSX.Element {
+export default function Search(): JSX.Element {
   const { data, error, loading } = useStudyData();
   return (
     <div className="flex flex-col p-6">
       <div className="flex justify-start mb-6">
-        <h1 className="text-2xl font-bold">Charts</h1>
+        <h1 className="text-2xl font-bold">Search all studies</h1>
       </div>
 
       <div className="justify-center items-center flex-col">
@@ -43,16 +44,8 @@ export default function Charts(): JSX.Element {
             <AlertDescription>{JSON.stringify(error)}</AlertDescription>
           </Alert>
         ) : data ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
-            <TrialCount />
-            <ConditionsChart />
-            <RegionChart />
-            <StartDateChart />
-            <SmartTherapeuticClassificationChart />
-            <SmartPhaseClassificationChart />
-            <SmartTreatmentClassificationChart />
-            <SmartPopulationClassificationChart />
-            <SmartOverviewClassificationChart />
+          <div className="">
+            <AllStudiesTable />
           </div>
         ) : (
           <></>

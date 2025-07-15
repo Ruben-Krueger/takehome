@@ -1,4 +1,11 @@
-import { Home, ChartArea, LayoutDashboard, Plus, X } from 'lucide-react';
+import {
+  Home,
+  ChartArea,
+  LayoutDashboard,
+  Plus,
+  X,
+  Search,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDashboardLayouts } from '@/hooks/use-dashboard-layouts';
@@ -81,6 +88,15 @@ export default function AppSidebar() {
                     <a href={'/charts'}>
                       <ChartArea />
                       <span className="text-black">Charts</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <a href={'/search'}>
+                      <Search />
+                      <span className="text-black">Search</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

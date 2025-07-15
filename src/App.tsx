@@ -9,6 +9,7 @@ import { FiltersProvider } from './contexts/FiltersContext';
 import Header from './components/ui/header';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import AppSideBar from '@/components/ui/AppSideBar';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/dashboard/:id" element={<Dashboard />} />
                   <Route path="/charts" element={<Charts />} />
+                  <Route path="/search" element={<Search />} />
                 </Routes>
               </main>
               <Footer />
