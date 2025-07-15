@@ -30,7 +30,7 @@ const CHART_COMPONENTS = {
   SmartOverviewClassificationChart,
 };
 
-const AVAILABLE_CHARTS: { type: ChartType; label: string }[] = [
+const CHARTS: { type: ChartType; label: string }[] = [
   { type: 'TrialCount', label: 'Trial Count' },
   { type: 'ConditionsChart', label: 'Conditions Chart' },
   { type: 'RegionChart', label: 'Region Chart' },
@@ -53,7 +53,7 @@ const AVAILABLE_CHARTS: { type: ChartType; label: string }[] = [
   },
   {
     type: 'SmartOverviewClassificationChart',
-    label: 'Overview -Smart Classifications',
+    label: 'Overview - Smart Classifications',
   },
 ];
 
@@ -68,6 +68,7 @@ export default function Dashboard() {
     currentLayoutId,
     setCurrentLayoutId,
   } = useDashboardLayouts();
+
   const [showAddChart, setShowAddChart] = useState(false);
   const [draggedWidget, setDraggedWidget] = useState<string | null>(null);
 
@@ -77,6 +78,11 @@ export default function Dashboard() {
   if (layoutId !== currentLayoutId) {
     setCurrentLayoutId(layoutId);
   }
+
+  // Filter out charts that are already added to the dashboard
+  const availableCharts = CHARTS.filter(
+    chart => !layout.widgets.some(widget => widget.type === chart.type)
+  );
 
   const handleAddChart = (chartType: ChartType) => {
     const newWidget = {
@@ -161,18 +167,24 @@ export default function Dashboard() {
             <CardTitle>Add Chart</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {AVAILABLE_CHARTS.map(chart => (
-                <Button
-                  key={chart.type}
-                  variant="outline"
-                  onClick={() => handleAddChart(chart.type)}
-                  className="justify-start"
-                >
-                  {chart.label}
-                </Button>
-              ))}
-            </div>
+            {availableCharts.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {availableCharts.map(chart => (
+                  <Button
+                    key={chart.type}
+                    variant="outline"
+                    onClick={() => handleAddChart(chart.type)}
+                    className="justify-start"
+                  >
+                    {chart.label}
+                  </Button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-4">
+                All available charts have already been added to this dashboard.
+              </p>
+            )}
           </CardContent>
         </Card>
       )}
@@ -185,7 +197,7 @@ export default function Dashboard() {
           return (
             <div
               key={widget.id}
-              className={`relative group ${layout.isDefault ? 'cursor-default' : 'cursor-move'}`}
+              className={`relative group h-full ${layout.isDefault ? 'cursor-default' : 'cursor-move'}`}
               draggable={!layout.isDefault}
               onDragStart={e => handleDragStart(e, widget.id)}
               onDragOver={handleDragOver}
@@ -201,7 +213,9 @@ export default function Dashboard() {
                   <X className="h-4 w-4" />
                 </Button>
               )}
-              <ChartComponent />
+              <div className="h-full">
+                <ChartComponent />
+              </div>
             </div>
           );
         })}
