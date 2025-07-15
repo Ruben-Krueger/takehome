@@ -1,11 +1,4 @@
-import {
-  Calendar,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  ChartArea,
-} from 'lucide-react';
+import { Home, ChartArea, LayoutDashboard } from 'lucide-react';
 
 import {
   Sidebar,
@@ -32,7 +25,7 @@ const items = [
   {
     title: 'Dashboard',
     url: '/dashboard',
-    icon: Home,
+    icon: LayoutDashboard,
   },
 ];
 

@@ -29,31 +29,31 @@ const fontSizeMap = {
     '--text-xs': '0.625rem', // 10px
     '--text-sm': '0.75rem', // 12px
     '--text-base': '0.875rem', // 14px
-    '--text-lg': '1rem', // 16px
-    '--text-xl': '1.125rem', // 18px
-    '--text-2xl': '1.25rem', // 20px
-    '--text-3xl': '1.5rem', // 24px
-    '--text-4xl': '1.875rem', // 30px
+    '--text-lg': '1.125rem', // 18px
+    '--text-xl': '1.375rem', // 22px
+    '--text-2xl': '1.75rem', // 28px
+    '--text-3xl': '2.25rem', // 36px
+    '--text-4xl': '2.875rem', // 46px
   },
   md: {
     '--text-xs': '0.75rem', // 12px
     '--text-sm': '0.875rem', // 14px
     '--text-base': '1rem', // 16px (default)
-    '--text-lg': '1.125rem', // 18px
-    '--text-xl': '1.25rem', // 20px
-    '--text-2xl': '1.5rem', // 24px
-    '--text-3xl': '1.875rem', // 30px
-    '--text-4xl': '2.25rem', // 36px
+    '--text-lg': '1.25rem', // 20px
+    '--text-xl': '1.625rem', // 26px
+    '--text-2xl': '2.125rem', // 34px
+    '--text-3xl': '2.75rem', // 44px
+    '--text-4xl': '3.5rem', // 56px
   },
   lg: {
     '--text-xs': '0.875rem', // 14px
     '--text-sm': '1rem', // 16px
-    '--text-base': '1.125rem', // 18px
-    '--text-lg': '1.25rem', // 20px
-    '--text-xl': '1.5rem', // 24px
-    '--text-2xl': '1.875rem', // 30px
-    '--text-3xl': '2.25rem', // 36px
-    '--text-4xl': '2.75rem', // 44px
+    '--text-base': '1.25rem', // 20px
+    '--text-lg': '1.625rem', // 26px
+    '--text-xl': '2.125rem', // 34px
+    '--text-2xl': '2.75rem', // 44px
+    '--text-3xl': '3.5rem', // 56px
+    '--text-4xl': '4.5rem', // 72px
   },
 };
 

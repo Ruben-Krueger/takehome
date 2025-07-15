@@ -42,11 +42,11 @@ export default function FontSizeWidget() {
   const { fontSize, setFontSize } = useFontSize();
 
   return (
-    <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-lg shadow-lg p-2">
+    <div className="fixed top-4 right-4 z-50 bg-white border border-gray-200 rounded-lg shadow-lg p-2 group hover:w-auto w-10 transition-all duration-700 overflow-hidden">
       <div className="flex items-center gap-2">
-        <Type className="h-4 w-4 text-gray-500" />
+        <Type className="h-4 w-4 text-gray-500 flex-shrink-0" />
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-700 whitespace-nowrap">
           {Object.values(FontSize).map(ft => (
             <WidgetButton
               fontSize={ft}
@@ -56,7 +56,7 @@ export default function FontSizeWidget() {
             />
           ))}
         </div>
-        <Badge variant="secondary" className="text-xs">
+        <Badge variant="secondary" className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-700 whitespace-nowrap">
           {fontSize}
         </Badge>
       </div>
