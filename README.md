@@ -40,8 +40,9 @@ I didn't "vibe-code" this assignment. While vibe-coding is great for quickly cre
 However, I did use AI in the following ways:
 
 1. Brainstorm approaches to problems (e.g., how to implement font resizing)
-2. Debugging well-defined bugs (e.g., "why is this component not centered?")
+2. Debugging well-defined issues (e.g., "why is this component not centered?")
 3. Refactoring code and components (e.g., "split this large component into 5 different ones" )
+4. Drafting the first approach for UI components (e.g., the 'add chart' feature)
 
 ## Extensions
 
