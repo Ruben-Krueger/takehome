@@ -89,8 +89,6 @@ export default function Dashboard() {
         w => w.id === targetWidgetId
       );
 
-      console.log('x0', targetIndex, draggedIndex);
-
       if (draggedIndex !== -1 && targetIndex !== -1) {
         const newWidgets = [...layout.widgets];
 
@@ -163,29 +161,23 @@ export default function Dashboard() {
               key={widget.id}
               className={`relative group ${
                 widget.type === 'AllStudiesTable' ? 'col-span-full' : ''
-              }`}
+              } ${layout.isDefault ? 'cursor-default' : 'cursor-move'}`}
               draggable={!layout.isDefault}
               onDragStart={e => handleDragStart(e, widget.id)}
               onDragOver={handleDragOver}
               onDrop={e => handleDrop(e, widget.id)}
             >
-              <Card
-                className={`h-full overflow-hidden ${layout.isDefault ? 'cursor-default' : 'cursor-move'}`}
-              >
-                <CardContent className="p-4 overflow-hidden">
-                  {!layout.isDefault && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                      onClick={() => handleRemoveChart(widget.id)}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  )}
-                  <ChartComponent />
-                </CardContent>
-              </Card>
+              {!layout.isDefault && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                  onClick={() => handleRemoveChart(widget.id)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+              <ChartComponent />
             </div>
           );
         })}
