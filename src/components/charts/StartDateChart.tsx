@@ -41,8 +41,6 @@ export default function StartDateChart() {
     return flattenedYears;
   }, [data]);
 
-  console.log(chartData);
-
   return (
     <StudyChartContainer title="Start dates">
       <LineChart

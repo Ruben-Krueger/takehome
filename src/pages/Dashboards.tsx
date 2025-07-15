@@ -8,27 +8,56 @@ import { Plus, X } from 'lucide-react';
 import { FiltersPanel } from '@/components/FiltersPanel';
 import TrialCount from '@/components/charts/TrialCountChart';
 import ConditionsChart from '@/components/charts/ConditionsChart';
-import SponsorsChart from '@/components/charts/SponsorsChart';
-import TopSponsorsChart from '@/components/charts/TopSponsorsChart';
 import RegionChart from '@/components/charts/RegionChart';
 import { AllStudiesTable } from '@/components/charts/AllStudiesTable';
+import StartDateChart from '@/components/charts/StartDateChart';
+import SmartClassificationChart from '@/components/charts/SmartClassificationChart';
+import SmartOverviewClassificationChart from '@/components/charts/SmartOverviewClassificationChart';
+import SmartPhaseClassificationChart from '@/components/charts/SmartPhaseClassificationChart';
+import SmartPopulationClassificationChart from '@/components/charts/SmartPopulationClassificationChart';
+import SmartTherapeuticClassificationChart from '@/components/charts/SmartTherapeuticClassificationChart';
+import SmartTreatmentClassificationChart from '@/components/charts/SmartTreatmentClassificationChart';
 
 const CHART_COMPONENTS = {
   TrialCount,
   ConditionsChart,
-  SponsorsChart,
-  TopSponsorsChart,
   RegionChart,
   AllStudiesTable,
+  StartDateChart,
+  SmartClassificationChart,
+  SmartTherapeuticClassificationChart,
+  SmartPhaseClassificationChart,
+  SmartTreatmentClassificationChart,
+  SmartPopulationClassificationChart,
+  SmartOverviewClassificationChart,
 };
 
 const AVAILABLE_CHARTS: { type: ChartType; label: string }[] = [
   { type: 'TrialCount', label: 'Trial Count' },
   { type: 'ConditionsChart', label: 'Conditions Chart' },
-  { type: 'SponsorsChart', label: 'Sponsors Chart' },
-  { type: 'TopSponsorsChart', label: 'Top Sponsors Chart' },
   { type: 'RegionChart', label: 'Region Chart' },
   { type: 'AllStudiesTable', label: 'All Studies Table' },
+  { type: 'StartDateChart', label: 'Start Date' },
+  {
+    type: 'SmartPhaseClassificationChart',
+    label: 'Phases - Smart Classifications',
+  },
+  {
+    type: 'SmartTherapeuticClassificationChart',
+    label: 'Therapeutics - Smart Classifications',
+  },
+  {
+    type: 'SmartTreatmentClassificationChart',
+    label: 'Treatments - Smart Classifications',
+  },
+  {
+    type: 'SmartPopulationClassificationChart',
+    label: 'Population - Smart Classifications',
+  },
+  {
+    type: 'SmartOverviewClassificationChart',
+    label: 'Overview -Smart Classifications',
+  },
 ];
 
 export default function Dashboard() {

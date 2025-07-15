@@ -5,11 +5,14 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircleIcon } from 'lucide-react';
 import TrialCount from '@/components/charts/TrialCountChart';
 import ConditionsChart from '@/components/charts/ConditionsChart';
-import SponsorsChart from '@/components/charts/SponsorsChart';
-import TopSponsorsChart from '@/components/charts/TopSponsorsChart';
 import RegionChart from '@/components/charts/RegionChart';
 import StartDateChart from '@/components/charts/StartDateChart';
 import { AllStudiesTable } from '@/components/charts/AllStudiesTable';
+import SmartTherapeuticClassificationChart from '@/components/charts/SmartTherapeuticClassificationChart';
+import SmartPhaseClassificationChart from '@/components/charts/SmartPhaseClassificationChart';
+import SmartTreatmentClassificationChart from '@/components/charts/SmartTreatmentClassificationChart';
+import SmartPopulationClassificationChart from '@/components/charts/SmartPopulationClassificationChart';
+import SmartOverviewClassificationChart from '@/components/charts/SmartOverviewClassificationChart';
 
 function SkeletonCard() {
   return (
@@ -26,9 +29,12 @@ function SkeletonCard() {
 export default function Charts(): JSX.Element {
   const { data, error, loading } = useStudyData();
   return (
-    <div className="flex justify-center items-center flex-col">
-      <h1 className="text-xl">Charts</h1>
-      <div>
+    <div className="flex flex-col p-6">
+      <div className="flex justify-start mb-6">
+        <h1 className="text-2xl font-bold">Charts</h1>
+      </div>
+
+      <div className="justify-center items-center flex-col">
         {loading ? (
           <SkeletonCard />
         ) : error ? (
@@ -38,13 +44,16 @@ export default function Charts(): JSX.Element {
             <AlertDescription>{JSON.stringify(error)}</AlertDescription>
           </Alert>
         ) : data ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <TrialCount />
             <ConditionsChart />
-            <SponsorsChart />
-            <TopSponsorsChart />
             <RegionChart />
             <StartDateChart />
+            <SmartTherapeuticClassificationChart />
+            <SmartPhaseClassificationChart />
+            <SmartTreatmentClassificationChart />
+            <SmartPopulationClassificationChart />
+            <SmartOverviewClassificationChart />
             <div className="col-span-full">
               <AllStudiesTable />
             </div>

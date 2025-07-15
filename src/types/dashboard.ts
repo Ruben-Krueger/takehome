@@ -3,10 +3,15 @@ export interface ChartWidget {
   type:
     | 'TrialCount'
     | 'ConditionsChart'
-    | 'SponsorsChart'
-    | 'TopSponsorsChart'
     | 'RegionChart'
-    | 'AllStudiesTable';
+    | 'AllStudiesTable'
+    | 'StartDateChart'
+    | 'SmartPhaseClassificationChart'
+    | 'SmartTherapeuticClassificationChart'
+    | 'SmartTreatmentClassificationChart'
+    | 'SmartPopulationClassificationChart'
+    | 'SmartOverviewClassificationChart';
+
   position: {
     x: number;
     y: number;
