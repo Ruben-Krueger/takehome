@@ -80,7 +80,7 @@ const CLASSIFICATION_PATTERNS = {
     pediatric: /(pediatric|child|infant|neonatal|adolescent|juvenile|young)/i,
     geriatric: /(geriatric|elderly|aging|senior|old age)/i,
     pregnant: /(pregnant|pregnancy|gestation|maternal)/i,
-    specificCondition:
+    'specific condition':
       /(patients?\s*with|subjects?\s*with|individuals?\s*with)/i,
   },
 };

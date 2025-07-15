@@ -1,4 +1,12 @@
-import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+} from 'recharts';
 
 import StudyChartContainer from '../study-chart-container';
 import useStudyData from '@/hooks/use-study-data';
@@ -43,18 +51,18 @@ export default function StartDateChart() {
 
   return (
     <StudyChartContainer title="Start dates">
-      <LineChart
-        width={730}
-        height={250}
-        data={chartData}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <XAxis dataKey="year" />
-        <YAxis dataKey="count" />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="count" stroke="#2563eb" />
-      </LineChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart
+          data={chartData}
+          margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+        >
+          <XAxis dataKey="year" />
+          <YAxis dataKey="count" />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="count" stroke="#2563eb" />
+        </LineChart>
+      </ResponsiveContainer>
     </StudyChartContainer>
   );
 }
