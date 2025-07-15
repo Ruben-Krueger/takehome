@@ -44,6 +44,12 @@ However, I did use AI in the following ways:
 3. Refactoring code and components (e.g., "split this large component into 5 different ones" )
 4. Drafting the first approach for UI components (e.g., the 'add chart' feature)
 
+## Accessibilty
+
+I confirmed the accessiblity of this app using [Accessibe](https://accessibe.com/accessscan).
+
+![Accessibility Report](./accessibilty.png)
+
 ## Extensions
 
 Possible improvements:
