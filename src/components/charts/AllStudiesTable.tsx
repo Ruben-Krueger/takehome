@@ -223,7 +223,7 @@ export function AllStudiesTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border max-h-[500px] overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (

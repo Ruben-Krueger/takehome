@@ -42,7 +42,7 @@ export default function TopSponsorsChart() {
 
   return (
     <StudyChartContainer title="Top 10 Sponsors">
-      <ChartContainer config={chartConfig} className="min-h-[350px] w-full">
+      <ChartContainer config={chartConfig} className="h-[400px] w-full">
         <BarChart
           accessibilityLayer
           data={chartData}

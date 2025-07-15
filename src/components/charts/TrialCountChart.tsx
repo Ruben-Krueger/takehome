@@ -40,7 +40,7 @@ export default function TrialCount() {
 
   return (
     <StudyChartContainer title="Trial counts">
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+      <ChartContainer config={chartConfig} className="h-[250px] w-full">
         <BarChart accessibilityLayer data={chartData}>
           <Bar
             dataKey="clinicalTrials"

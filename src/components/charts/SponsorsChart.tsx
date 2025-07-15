@@ -42,7 +42,7 @@ export default function SponsorsChart() {
 
   return (
     <StudyChartContainer title="Clinical Trials by Sponsor">
-      <ChartContainer config={chartConfig} className="min-h-[400px] w-full">
+      <ChartContainer config={chartConfig} className="h-[450px] w-full">
         <BarChart
           accessibilityLayer
           data={chartData}

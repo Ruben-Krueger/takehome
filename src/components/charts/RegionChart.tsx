@@ -47,7 +47,7 @@ export default function RegionChart() {
 
   return (
     <StudyChartContainer title="Enrollment Totals by Region">
-      <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
+      <ChartContainer config={chartConfig} className="h-[300px] w-full">
         <BarChart accessibilityLayer data={chartData}>
           <Bar dataKey="enrollment" fill="var(--color-enrollment)" radius={4} />
           <ChartTooltip content={<ChartTooltipContent />} />

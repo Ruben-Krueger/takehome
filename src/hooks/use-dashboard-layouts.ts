@@ -52,6 +52,7 @@ export function useDashboardLayouts() {
   const [currentLayoutId, setCurrentLayoutId] = useState<string>('default');
 
   useEffect(() => {
+    // persist charts
     const saved = localStorage.getItem('dashboard-layouts');
     if (saved) {
       try {

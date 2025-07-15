@@ -63,15 +63,15 @@ export default function ConditionsChart() {
 
   return (
     <StudyChartContainer title="Clinical Trials by Conditions">
-      <ChartContainer config={chartConfig} className="min-h-[300px] w-full">
+      <ChartContainer config={chartConfig} className="h-[400px] w-full">
         <PieChart>
           <Pie
             data={chartData}
             dataKey="count"
             nameKey="condition"
             cx="50%"
-            cy="50%"
-            outerRadius={100}
+            cy="40%"
+            outerRadius={80}
             fill="#8884d8"
           >
             {chartData.map((entry, index) => (
@@ -79,7 +79,10 @@ export default function ConditionsChart() {
             ))}
           </Pie>
           <ChartTooltip content={<ChartTooltipContent />} />
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend
+            content={<ChartLegendContent />}
+            wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }}
+          />
         </PieChart>
       </ChartContainer>
     </StudyChartContainer>

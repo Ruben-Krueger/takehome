@@ -36,6 +36,7 @@ export default function Dashboard() {
     getCurrentLayout,
     addWidget,
     removeWidget,
+    updateLayout,
     layouts,
     currentLayoutId,
     setCurrentLayoutId,
@@ -72,13 +73,14 @@ export default function Dashboard() {
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+
     e.dataTransfer.dropEffect = 'move';
   };
 
   const handleDrop = (e: React.DragEvent, targetWidgetId: string) => {
     e.preventDefault();
+
     if (draggedWidget && draggedWidget !== targetWidgetId) {
-      // Simple reordering logic - swap positions
       const draggedIndex = layout.widgets.findIndex(
         w => w.id === draggedWidget
       );
@@ -86,8 +88,12 @@ export default function Dashboard() {
         w => w.id === targetWidgetId
       );
 
+      console.log('x0', targetIndex, draggedIndex);
+
       if (draggedIndex !== -1 && targetIndex !== -1) {
         const newWidgets = [...layout.widgets];
+
+        // Simple reordering logic - swap positions
         [newWidgets[draggedIndex], newWidgets[targetIndex]] = [
           newWidgets[targetIndex],
           newWidgets[draggedIndex],
@@ -97,6 +103,11 @@ export default function Dashboard() {
           widget.position.y = Math.floor(index / 2);
           widget.position.x = index % 2;
         });
+
+        // Actually update the layout with the new widget order
+        updateLayout(layout.id, { widgets: newWidgets });
+      } else {
+        console.debug('Could not find layout widgets');
       }
     }
     setDraggedWidget(null);
@@ -105,7 +116,9 @@ export default function Dashboard() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">{layout.name}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold">{layout.name}</h1>
+        </div>
         {!layout.isDefault && (
           <Button
             onClick={() => setShowAddChart(!showAddChart)}
@@ -153,8 +166,10 @@ export default function Dashboard() {
               onDragOver={handleDragOver}
               onDrop={e => handleDrop(e, widget.id)}
             >
-              <Card className="h-full cursor-move">
-                <CardContent className="p-4">
+              <Card
+                className={`h-full overflow-hidden ${layout.isDefault ? 'cursor-default' : 'cursor-move'}`}
+              >
+                <CardContent className="p-4 overflow-hidden">
                   {!layout.isDefault && (
                     <Button
                       variant="ghost"
@@ -176,10 +191,6 @@ export default function Dashboard() {
       {layout.widgets.length === 0 && !layout.isDefault && (
         <div className="text-center py-12">
           <p className="text-gray-500 mb-4">No charts added yet</p>
-          <Button onClick={() => setShowAddChart(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Your First Chart
-          </Button>
         </div>
       )}
     </div>
