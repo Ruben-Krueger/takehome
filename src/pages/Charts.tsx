@@ -1,4 +1,3 @@
-import StudyChart from '@/components/study-chart-container';
 import useStudyData from '@/hooks/use-study-data';
 import type { JSX } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -9,6 +8,7 @@ import ConditionsChart from '@/components/charts/ConditionsChart';
 import SponsorsChart from '@/components/charts/SponsorsChart';
 import TopSponsorsChart from '@/components/charts/TopSponsorsChart';
 import RegionChart from '@/components/charts/RegionChart';
+import StartDateChart from '@/components/charts/StartDateChart';
 import { AllStudiesTable } from '@/components/charts/AllStudiesTable';
 
 function SkeletonCard() {
@@ -44,6 +44,7 @@ export default function Charts(): JSX.Element {
             <SponsorsChart />
             <TopSponsorsChart />
             <RegionChart />
+            <StartDateChart />
             <div className="col-span-full">
               <AllStudiesTable />
             </div>

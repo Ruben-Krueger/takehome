@@ -11,18 +11,9 @@ import StudyChartContainer from '../study-chart-container';
 import useStudyData from '@/hooks/use-study-data';
 import { useMemo } from 'react';
 
-const COLORS = [
-  '#2563eb',
-  '#60a5fa',
-  '#3b82f6',
-  '#1d4ed8',
-  '#1e40af',
-  '#1e3a8a',
-  '#312e81',
-  '#6366f1',
-  '#8b5cf6',
-  '#a855f7',
-];
+const N_CONDITIONS = 5;
+
+const COLORS = ['#1F77B4', '#FF7F0E', '#2CA02C', '#D62728', '#9467BD'];
 
 export default function ConditionsChart() {
   const { data } = useStudyData();
@@ -42,7 +33,7 @@ export default function ConditionsChart() {
 
     const sortedConditions = Object.entries(conditionCounts)
       .sort(([, a], [, b]) => b - a)
-      .slice(0, 10);
+      .slice(0, N_CONDITIONS);
 
     const pieData = sortedConditions.map(([condition, count], index) => ({
       condition,
