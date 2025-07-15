@@ -12,8 +12,16 @@ import useStudyData from '@/hooks/use-study-data';
 import { useMemo } from 'react';
 
 const COLORS = [
-  '#2563eb', '#60a5fa', '#3b82f6', '#1d4ed8', '#1e40af',
-  '#1e3a8a', '#312e81', '#6366f1', '#8b5cf6', '#a855f7'
+  '#2563eb',
+  '#60a5fa',
+  '#3b82f6',
+  '#1d4ed8',
+  '#1e40af',
+  '#1e3a8a',
+  '#312e81',
+  '#6366f1',
+  '#8b5cf6',
+  '#a855f7',
 ];
 
 export default function ConditionsChart() {
@@ -22,12 +30,15 @@ export default function ConditionsChart() {
   const { chartData, chartConfig } = useMemo(() => {
     if (!data) return { chartData: [], chartConfig: {} };
 
-    const conditionCounts = data.reduce((acc, study) => {
-      study.conditions.forEach(condition => {
-        acc[condition] = (acc[condition] || 0) + 1;
-      });
-      return acc;
-    }, {} as Record<string, number>);
+    const conditionCounts = data.reduce(
+      (acc, study) => {
+        study.conditions.forEach(condition => {
+          acc[condition] = (acc[condition] || 0) + 1;
+        });
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     const sortedConditions = Object.entries(conditionCounts)
       .sort(([, a], [, b]) => b - a)

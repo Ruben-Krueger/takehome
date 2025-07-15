@@ -56,7 +56,10 @@ export default function FontSizeWidget() {
             />
           ))}
         </div>
-        <Badge variant="secondary" className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-700 whitespace-nowrap">
+        <Badge
+          variant="secondary"
+          className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-700 whitespace-nowrap"
+        >
           {fontSize}
         </Badge>
       </div>

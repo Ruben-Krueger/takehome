@@ -23,15 +23,24 @@ export default function RegionChart() {
   const chartData = useMemo(() => {
     if (!data) return [];
 
-    const regionData = data.reduce((acc, study) => {
-      const region = study.source === StudySource.CLINICAL_TRIALS ? 'United States' : 'European Union';
-      if (!acc[region]) {
-        acc[region] = { region, enrollment: 0, trials: 0 };
-      }
-      acc[region].trials += 1;
-      acc[region].enrollment += Math.floor(Math.random() * 1000) + 50;
-      return acc;
-    }, {} as Record<string, { region: string; enrollment: number; trials: number }>);
+    const regionData = data.reduce(
+      (acc, study) => {
+        const region =
+          study.source === StudySource.CLINICAL_TRIALS
+            ? 'United States'
+            : 'European Union';
+        if (!acc[region]) {
+          acc[region] = { region, enrollment: 0, trials: 0 };
+        }
+        acc[region].trials += 1;
+        acc[region].enrollment += Math.floor(Math.random() * 1000) + 50;
+        return acc;
+      },
+      {} as Record<
+        string,
+        { region: string; enrollment: number; trials: number }
+      >
+    );
 
     return Object.values(regionData);
   }, [data]);
@@ -40,11 +49,7 @@ export default function RegionChart() {
     <StudyChartContainer title="Enrollment Totals by Region">
       <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
         <BarChart accessibilityLayer data={chartData}>
-          <Bar
-            dataKey="enrollment"
-            fill="var(--color-enrollment)"
-            radius={4}
-          />
+          <Bar dataKey="enrollment" fill="var(--color-enrollment)" radius={4} />
           <ChartTooltip content={<ChartTooltipContent />} />
         </BarChart>
       </ChartContainer>

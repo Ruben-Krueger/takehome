@@ -22,16 +22,20 @@ export default function TopSponsorsChart() {
   const chartData = useMemo(() => {
     if (!data) return [];
 
-    const sponsorCounts = data.reduce((acc, study) => {
-      acc[study.sponsor] = (acc[study.sponsor] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const sponsorCounts = data.reduce(
+      (acc, study) => {
+        acc[study.sponsor] = (acc[study.sponsor] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return Object.entries(sponsorCounts)
       .sort(([, a], [, b]) => b - a)
       .slice(0, 10)
       .map(([sponsor, count]) => ({
-        sponsor: sponsor.length > 25 ? sponsor.substring(0, 25) + '...' : sponsor,
+        sponsor:
+          sponsor.length > 25 ? sponsor.substring(0, 25) + '...' : sponsor,
         count,
       }));
   }, [data]);
