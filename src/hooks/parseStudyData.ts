@@ -135,7 +135,7 @@ function parseEUTrials(content: string): StudyData[] {
     let summary = '';
     let sponsor = '';
     let startDate = '';
-    let conditions: string[] = [];
+    const conditions: string[] = [];
     let enrollment = 0;
 
     for (const line of lines) {

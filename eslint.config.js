@@ -23,6 +23,7 @@ export default tseslint.config([
     },
     rules: {
       'prettier/prettier': 'warn',
+      'react-refresh/only-export-components': 'off',
     },
     languageOptions: {
       ecmaVersion: 2020,

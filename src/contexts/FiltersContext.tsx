@@ -33,13 +33,15 @@ const loadFiltersFromStorage = (): FilterState => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return defaultFilters;
-    
+
     const parsed = JSON.parse(stored);
     return {
       region: parsed.region || defaultFilters.region,
       conditionSearch: parsed.conditionSearch || defaultFilters.conditionSearch,
       dateRange: {
-        from: parsed.dateRange?.from ? new Date(parsed.dateRange.from) : undefined,
+        from: parsed.dateRange?.from
+          ? new Date(parsed.dateRange.from)
+          : undefined,
         to: parsed.dateRange?.to ? new Date(parsed.dateRange.to) : undefined,
       },
     };

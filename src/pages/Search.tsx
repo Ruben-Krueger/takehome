@@ -3,16 +3,7 @@ import type { JSX } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircleIcon } from 'lucide-react';
-import TrialCount from '@/components/charts/TrialCountChart';
-import ConditionsChart from '@/components/charts/ConditionsChart';
-import RegionChart from '@/components/charts/RegionChart';
-import StartDateChart from '@/components/charts/StartDateChart';
 import { AllStudiesTable } from '@/components/charts/AllStudiesTable';
-import SmartTherapeuticClassificationChart from '@/components/charts/SmartTherapeuticClassificationChart';
-import SmartPhaseClassificationChart from '@/components/charts/SmartPhaseClassificationChart';
-import SmartTreatmentClassificationChart from '@/components/charts/SmartTreatmentClassificationChart';
-import SmartPopulationClassificationChart from '@/components/charts/SmartPopulationClassificationChart';
-import SmartOverviewClassificationChart from '@/components/charts/SmartOverviewClassificationChart';
 
 function SkeletonCard() {
   return (
