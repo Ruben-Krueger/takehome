@@ -1,17 +1,13 @@
 import { type StudyData, StudySource, StudyStatus } from '../../shared/types';
 import * as fs from 'fs';
 
-const CTG_PATH = './example-data/ctg-studies.csv';
-
 function parseCSV(content: string): StudyData[] {
-  const lines = content.split('\n');
-  const headers = lines[0].split(',');
+  const rows = parseCSVContent(content);
+  const headers = rows[0];
   const studies: StudyData[] = [];
 
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
-
-    const values = parseCSVLine(lines[i]);
+  for (let i = 1; i < rows.length; i++) {
+    const values = rows[i];
     if (values.length < headers.length) continue;
 
     const study: StudyData = {
@@ -31,6 +27,54 @@ function parseCSV(content: string): StudyData[] {
   }
 
   return studies;
+}
+
+function parseCSVContent(content: string): string[][] {
+  const rows: string[][] = [];
+  const chars = content.split('');
+  let current = '';
+  let currentRow: string[] = [];
+  let inQuotes = false;
+
+  for (let i = 0; i < chars.length; i++) {
+    const char = chars[i];
+    const nextChar = chars[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        // Handle escaped quotes
+        current += '"';
+        i++; // Skip next quote
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      currentRow.push(current);
+      current = '';
+    } else if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && nextChar === '\n') {
+        i++; // Skip \n in \r\n
+      }
+      currentRow.push(current);
+      if (currentRow.some(field => field.trim())) {
+        rows.push(currentRow);
+      }
+      currentRow = [];
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+
+  // Handle last field and row
+  if (current || currentRow.length > 0) {
+    currentRow.push(current);
+    if (currentRow.some(field => field.trim())) {
+      rows.push(currentRow);
+    }
+  }
+
+  return rows;
 }
 
 function parseCSVLine(line: string): string[] {
@@ -95,11 +139,99 @@ function parseConditions(conditions: string): string[] {
     .filter(c => c.length > 0);
 }
 
-export default async function parseStudyData(
-  dataPath: string
-): Promise<StudyData[]> {
-  const result = await fetch(dataPath);
-  const content = await result.text();
-  const studies = parseCSV(content);
+function parseEUTrials(content: string): StudyData[] {
+  const studies: StudyData[] = [];
+  const trials = content.split(/(?=EudraCT Number:)/);
+
+  for (const trial of trials) {
+    if (!trial.trim() || trial.startsWith('This file contains')) continue;
+
+    const lines = trial.split('\n');
+    let id = '';
+    let title = '';
+    let url = '';
+    let status: StudyStatus = StudyStatus.ACTIVE;
+    let summary = '';
+    let sponsor = '';
+    let startDate = '';
+    let conditions: string[] = [];
+
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+
+      if (trimmedLine.startsWith('EudraCT Number:')) {
+        id = trimmedLine.replace('EudraCT Number:', '').trim();
+      } else if (trimmedLine.startsWith('A.3 Full title of the trial:')) {
+        title = trimmedLine.replace('A.3 Full title of the trial:', '').trim();
+      } else if (trimmedLine.startsWith('Link:')) {
+        url = trimmedLine.replace('Link:', '').trim();
+      } else if (trimmedLine.startsWith('Trial Status:')) {
+        const statusStr = trimmedLine.replace('Trial Status:', '').trim();
+        status = mapEUTrialStatus(statusStr);
+      } else if (trimmedLine.startsWith('E.2.1 Main objective of the trial:')) {
+        summary = trimmedLine
+          .replace('E.2.1 Main objective of the trial:', '')
+          .trim();
+      } else if (trimmedLine.startsWith('B.1.1 Name of Sponsor:')) {
+        sponsor = trimmedLine.replace('B.1.1 Name of Sponsor:', '').trim();
+      } else if (
+        trimmedLine.startsWith('Date on which this record was first entered')
+      ) {
+        const dateMatch = trimmedLine.match(/(\d{4}-\d{2}-\d{2})/);
+        if (dateMatch) startDate = dateMatch[1];
+      } else if (
+        trimmedLine.startsWith('E.1.1 Medical condition(s) being investigated:')
+      ) {
+        const condition = trimmedLine
+          .replace('E.1.1 Medical condition(s) being investigated:', '')
+          .trim();
+        if (condition) conditions.push(condition);
+      }
+    }
+
+    if (id && title) {
+      const study: StudyData = {
+        id,
+        title,
+        url,
+        status,
+        summary,
+        sponsor,
+        collaborators: [],
+        startISO: parseStartDate(startDate),
+        conditions,
+        source: StudySource.EUDRACT,
+      };
+      studies.push(study);
+    }
+  }
+
   return studies;
+}
+
+function mapEUTrialStatus(
+  status: string
+): (typeof StudyStatus)[keyof typeof StudyStatus] {
+  switch (status?.toLowerCase()) {
+    case 'completed':
+    case 'prematurely ended':
+      return StudyStatus.COMPLETE;
+    default:
+      return StudyStatus.ACTIVE;
+  }
+}
+
+export default async function parseStudyData(): Promise<StudyData[]> {
+  const [clinicalTrialsResult, euTrialsResult] = await Promise.all([
+    fetch('/ctg-studies.csv'),
+    fetch('/eu-trials-full.txt'),
+  ]);
+
+  const clinicalTrialsContent = await clinicalTrialsResult.text();
+  const euTrialsContent = await euTrialsResult.text();
+
+  const clinicalTrialsStudies = parseCSV(clinicalTrialsContent);
+  const euTrialsStudies = parseEUTrials(euTrialsContent);
+
+  return [...clinicalTrialsStudies, ...euTrialsStudies];
 }

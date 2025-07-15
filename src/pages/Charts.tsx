@@ -1,30 +1,56 @@
-import StudyChart from '@/components/study-chart';
+import StudyChart from '@/components/study-chart-container';
 import useStudyData from '@/hooks/use-study-data';
 import type { JSX } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircleIcon } from 'lucide-react';
+import TrialCount from '@/components/charts/TrialCountChart';
+import ConditionsChart from '@/components/charts/ConditionsChart';
+import SponsorsChart from '@/components/charts/SponsorsChart';
+import TopSponsorsChart from '@/components/charts/TopSponsorsChart';
+import RegionChart from '@/components/charts/RegionChart';
+import { AllStudiesTable } from '@/components/charts/AllStudiesTable';
 
-// Instructions:
-// Add a page accessible via a lefthand side menu bar called “Charts” accessible via /charts. Create a ~10 charts using the csv/json data above with the visualization library of your choice (Recharts, d3.js, charts.js, etc.). These charts should be rendered into the /charts page in a catalog list/ grid and should have its own chartId and chartTitle
-// Examples of charts include:
-// Total number of clinical trials in ClinicalTrials.gov vs EudraCT (simple numbers are fine)
-// Breakdown of clinical trials by conditions (pie chart)
-// Breakdown of clinical trials by each sponsor (bar chart, descending order)
-// Top 10 Sponsors
-// Enrollment totals by region
+function SkeletonCard() {
+  return (
+    <div className="flex flex-col space-y-3">
+      <Skeleton className="h-[125px] w-[250px] rounded-xl bg-muted/30" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px] bg-muted/30" />
+        <Skeleton className="h-4 w-[200px] bg-muted/30" />
+      </div>
+    </div>
+  );
+}
 
 export default function Charts(): JSX.Element {
   const { data, error, loading } = useStudyData();
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center flex-col">
       <h1 className="text-xl">Charts</h1>
       <div>
         {loading ? (
-          <>loading</>
+          <SkeletonCard />
         ) : error ? (
-          <>error</>
+          <Alert variant="destructive">
+            <AlertCircleIcon />
+            <AlertTitle>An error occured</AlertTitle>
+            <AlertDescription>{JSON.stringify(error)}</AlertDescription>
+          </Alert>
         ) : data ? (
-          <>{JSON.stringify(data)} </>
-        ) : null}
-        <StudyChart />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+            <TrialCount />
+            <ConditionsChart />
+            <SponsorsChart />
+            <TopSponsorsChart />
+            <RegionChart />
+            <div className="col-span-full">
+              <AllStudiesTable />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

@@ -1,35 +1,17 @@
 import type { StudyData } from 'shared/types';
 import parseStudyData from './parseStudyData';
-
-//
-
-// 4. Performance patterns:
-// - Only fetch once per app lifecycle
-// - Use useCallback for any returned functions
-// - Consider useMemo for expensive data transformations
-
-// 5. CSV loading in browser:
-// - Place CSV in public/ folder for client access
-// - Or use dynamic imports if bundling the data
-
-// 6. Error handling:
-// - Wrap fetch/parse in try-catch
-// - Provide meaningful error states
+import { useState, useEffect } from 'react';
 
 // 7. Type safety:
 // - Update return type from StudyData to include loading states
 // - Consider union types for different hook states
-
-interface StudyDataResponse {
+type StudyDataResponse = {
   data: StudyData[] | null;
   loading: boolean;
   error?: unknown;
-  refetch: () => void;
-}
-
+  refetch: () => Promise<void>;
+};
 let studyData: null | StudyData[] = null;
-
-import { useState, useEffect } from 'react';
 
 export default function useStudyData(): StudyDataResponse {
   const [loading, setLoading] = useState(true);
@@ -38,7 +20,7 @@ export default function useStudyData(): StudyDataResponse {
 
   const loadData = async () => {
     try {
-      const result = await parseStudyData('/ctg-studies.csv');
+      const result = await parseStudyData();
       studyData = result; // Cache for singleton
       setData(result);
     } catch (e) {
