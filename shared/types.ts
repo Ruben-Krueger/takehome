@@ -4,9 +4,11 @@ export const StudyStatus = {
 } as const;
 
 export const StudySource = {
-  CLINICAL_TRIALS: 'CLINICAL_TRIALS', // 🇺🇸
-  EUDRACT: 'EUDRACT', // 🇪🇺
+  CLINICAL_TRIALS: 'CLINICAL_TRIALS',
+  EUDRACT: 'EUDRACT',
 } as const;
+
+export type Region = 'us' | 'eu' | 'all';
 
 // In a production app, this would be represented as DB schema
 export type StudyData = {

@@ -5,6 +5,7 @@ import type { ChartType } from '@/types/dashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus, X } from 'lucide-react';
+import { FiltersPanel } from '@/components/FiltersPanel';
 import TrialCount from '@/components/charts/TrialCountChart';
 import ConditionsChart from '@/components/charts/ConditionsChart';
 import SponsorsChart from '@/components/charts/SponsorsChart';
@@ -151,6 +152,8 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       )}
+
+      <FiltersPanel />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {layout.widgets.map(widget => {

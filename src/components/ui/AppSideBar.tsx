@@ -115,7 +115,7 @@ export default function AppSidebar() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="h-6 w-6 p-0 hover:bg-red-100"
+                                className="p-2 hover:bg-red-100"
                                 onClick={e => handleDeleteLayout(layout.id, e)}
                               >
                                 <X className="h-3 w-3" />
