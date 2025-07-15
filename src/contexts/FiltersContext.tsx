@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Region } from 'shared/types';
 
@@ -21,16 +21,56 @@ interface FiltersContextType {
   resetFilters: () => void;
 }
 
+const STORAGE_KEY = 'study-filters';
+
 const defaultFilters: FilterState = {
   region: 'all',
   conditionSearch: '',
   dateRange: { from: undefined, to: undefined },
 };
 
+const loadFiltersFromStorage = (): FilterState => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return defaultFilters;
+    
+    const parsed = JSON.parse(stored);
+    return {
+      region: parsed.region || defaultFilters.region,
+      conditionSearch: parsed.conditionSearch || defaultFilters.conditionSearch,
+      dateRange: {
+        from: parsed.dateRange?.from ? new Date(parsed.dateRange.from) : undefined,
+        to: parsed.dateRange?.to ? new Date(parsed.dateRange.to) : undefined,
+      },
+    };
+  } catch {
+    return defaultFilters;
+  }
+};
+
+const saveFiltersToStorage = (filters: FilterState) => {
+  try {
+    const toStore = {
+      ...filters,
+      dateRange: {
+        from: filters.dateRange.from?.toISOString(),
+        to: filters.dateRange.to?.toISOString(),
+      },
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
+  } catch {
+    // Silently fail if localStorage is not available
+  }
+};
+
 const FiltersContext = createContext<FiltersContextType | undefined>(undefined);
 
 export function FiltersProvider({ children }: { children: ReactNode }) {
-  const [filters, setFilters] = useState<FilterState>(defaultFilters);
+  const [filters, setFilters] = useState<FilterState>(loadFiltersFromStorage);
+
+  useEffect(() => {
+    saveFiltersToStorage(filters);
+  }, [filters]);
 
   const setRegion = (region: FilterState['region']) => {
     setFilters(prev => ({ ...prev, region }));
