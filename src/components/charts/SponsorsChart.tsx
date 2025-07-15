@@ -47,7 +47,7 @@ export default function SponsorsChart() {
           accessibilityLayer
           data={chartData}
           layout="horizontal"
-          margin={{ left: 50 }}
+          // margin={{ left: 50 }}
         >
           <XAxis type="number" />
           <YAxis

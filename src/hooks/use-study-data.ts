@@ -22,9 +22,12 @@ export default function useStudyData(): StudyDataResponse {
   const filteredData = useMemo(() => {
     if (!rawData) return null;
 
-    return rawData.filter((study) => {
+    return rawData.filter(study => {
       // Region filter
-      if (filters.region === 'us' && study.source !== StudySource.CLINICAL_TRIALS) {
+      if (
+        filters.region === 'us' &&
+        study.source !== StudySource.CLINICAL_TRIALS
+      ) {
         return false;
       }
       if (filters.region === 'eu' && study.source !== StudySource.EUDRACT) {
@@ -45,11 +48,11 @@ export default function useStudyData(): StudyDataResponse {
       // Date range filter
       if (filters.dateRange.from || filters.dateRange.to) {
         const studyStartDate = new Date(study.startISO);
-        
+
         if (filters.dateRange.from && studyStartDate < filters.dateRange.from) {
           return false;
         }
-        
+
         if (filters.dateRange.to && studyStartDate > filters.dateRange.to) {
           return false;
         }

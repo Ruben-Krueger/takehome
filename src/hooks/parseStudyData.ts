@@ -1,5 +1,4 @@
 import { type StudyData, StudySource, StudyStatus } from '../../shared/types';
-import * as fs from 'fs';
 
 function parseCSV(content: string): StudyData[] {
   const rows = parseCSVContent(content);
@@ -78,29 +77,9 @@ function parseCSVContent(content: string): string[][] {
   return rows;
 }
 
-function parseCSVLine(line: string): string[] {
-  const result: string[] = [];
-  let current = '';
-  let inQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-
-    if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === ',' && !inQuotes) {
-      result.push(current);
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-
-  result.push(current);
-  return result;
-}
-
-function mapStudyStatus(status: string): StudyStatus {
+function mapStudyStatus(
+  status: string
+): (typeof StudyStatus)[keyof typeof StudyStatus] {
   switch (status?.toUpperCase()) {
     case 'RECRUITING':
     case 'ACTIVE_NOT_RECRUITING':
@@ -151,7 +130,8 @@ function parseEUTrials(content: string): StudyData[] {
     let id = '';
     let title = '';
     let url = '';
-    let status: StudyStatus = StudyStatus.ACTIVE;
+    let status: (typeof StudyStatus)[keyof typeof StudyStatus] =
+      StudyStatus.ACTIVE;
     let summary = '';
     let sponsor = '';
     let startDate = '';

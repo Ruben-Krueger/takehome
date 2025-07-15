@@ -12,9 +12,11 @@ import { useMemo } from 'react';
 const chartConfig = {
   count: {
     label: 'Number of Trials',
-    color: '#2563eb',
+    color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig;
+
+const N_SPONSORS = 10;
 
 export default function TopSponsorsChart() {
   const { data } = useStudyData();
@@ -32,16 +34,16 @@ export default function TopSponsorsChart() {
 
     return Object.entries(sponsorCounts)
       .sort(([, a], [, b]) => b - a)
-      .slice(0, 10)
+      .slice(0, N_SPONSORS)
       .map(([sponsor, count]) => ({
         sponsor:
-          sponsor.length > 25 ? sponsor.substring(0, 25) + '...' : sponsor,
+          sponsor.length > 20 ? sponsor.substring(0, 20) + '...' : sponsor,
         count,
       }));
   }, [data]);
 
   return (
-    <StudyChartContainer title="Top 10 Sponsors">
+    <StudyChartContainer title={`Top ${N_SPONSORS} Sponsors`}>
       <ChartContainer config={chartConfig} className="h-[400px] w-full">
         <BarChart
           accessibilityLayer
@@ -53,10 +55,13 @@ export default function TopSponsorsChart() {
           <YAxis
             type="category"
             dataKey="sponsor"
-            width={180}
-            tick={{ fontSize: 11 }}
+            width={150}
+            tick={{ fontSize: 12 }}
+            tickLine={false}
+            axisLine={false}
           />
-          <Bar dataKey="count" fill="#2563eb" radius={4} />
+          <Bar dataKey="count" fill="var(--color-count)" radius={4} />
+
           <ChartTooltip content={<ChartTooltipContent />} />
         </BarChart>
       </ChartContainer>
