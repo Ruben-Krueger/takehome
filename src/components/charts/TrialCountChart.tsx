@@ -1,4 +1,4 @@
-import { Bar, BarChart } from 'recharts';
+import { Bar, BarChart, XAxis, YAxis } from 'recharts';
 
 import {
   ChartContainer,
@@ -12,13 +12,9 @@ import useStudyData from '@/hooks/use-study-data';
 import { useMemo } from 'react';
 
 const chartConfig = {
-  clinicalTrials: {
-    label: 'Clinical Trials (US)',
+  count: {
+    label: 'Number of Trials',
     color: '#2563eb',
-  },
-  eudract: {
-    label: 'EUDRACT (EU)',
-    color: '#60a5fa',
   },
 } satisfies ChartConfig;
 
@@ -26,28 +22,37 @@ export default function TrialCount() {
   const { data } = useStudyData();
 
   const chartData = useMemo(() => {
+    if (!data) return [];
+
+    const usCount = data.filter(
+      study => study.source === StudySource.CLINICAL_TRIALS
+    ).length;
+
+    const euCount = data.filter(
+      study => study.source === StudySource.EUDRACT
+    ).length;
+
     return [
       {
-        source: 'Trial Sources',
-        clinicalTrials: data?.filter(
-          study => study.source === StudySource.CLINICAL_TRIALS
-        ).length,
-        eudract: data?.filter(study => study.source === StudySource.EUDRACT)
-          .length,
+        region: 'United States',
+        count: usCount,
+        fill: '#2563eb',
+      },
+      {
+        region: 'European Union',
+        count: euCount,
+        fill: '#dc2626',
       },
     ];
   }, [data]);
 
   return (
     <StudyChartContainer title="Trial counts">
-      <ChartContainer config={chartConfig} className="h-[250px] w-full">
+      <ChartContainer config={chartConfig} className=" w-full">
         <BarChart accessibilityLayer data={chartData}>
-          <Bar
-            dataKey="clinicalTrials"
-            fill="var(--color-clinicalTrials)"
-            radius={4}
-          />
-          <Bar dataKey="eudract" fill="var(--color-eudract)" radius={4} />
+          <XAxis dataKey="region" />
+          <YAxis />
+          <Bar dataKey="count" radius={4} />
           <ChartTooltip content={<ChartTooltipContent />} />
         </BarChart>
       </ChartContainer>

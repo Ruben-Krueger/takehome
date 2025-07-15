@@ -22,7 +22,7 @@ export default tseslint.config([
       prettier: prettier,
     },
     rules: {
-      'prettier/prettier': 'error',
+      'prettier/prettier': 'warn',
     },
     languageOptions: {
       ecmaVersion: 2020,

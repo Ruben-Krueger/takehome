@@ -1,4 +1,4 @@
-import { Bar, BarChart } from 'recharts';
+import { Bar, BarChart, XAxis, YAxis } from 'recharts';
 import {
   ChartContainer,
   ChartTooltip,
@@ -29,16 +29,22 @@ export default function RegionChart() {
           study.source === StudySource.CLINICAL_TRIALS
             ? 'United States'
             : 'European Union';
+
         if (!acc[region]) {
-          acc[region] = { region, enrollment: 0, trials: 0 };
+          acc[region] = {
+            region,
+            enrollment: 0,
+            trials: 0,
+            fill: region === 'United States' ? '#2563eb' : '#dc2626',
+          };
         }
         acc[region].trials += 1;
-        acc[region].enrollment += Math.floor(Math.random() * 1000) + 50;
+        acc[region].enrollment += study.enrollment;
         return acc;
       },
       {} as Record<
         string,
-        { region: string; enrollment: number; trials: number }
+        { region: string; enrollment: number; trials: number; fill: string }
       >
     );
 
@@ -49,7 +55,9 @@ export default function RegionChart() {
     <StudyChartContainer title="Enrollment Totals by Region">
       <ChartContainer config={chartConfig} className="h-[300px] w-full">
         <BarChart accessibilityLayer data={chartData}>
-          <Bar dataKey="enrollment" fill="var(--color-enrollment)" radius={4} />
+          <XAxis dataKey="region" />
+          <YAxis />
+          <Bar dataKey="enrollment" radius={4} />
           <ChartTooltip content={<ChartTooltipContent />} />
         </BarChart>
       </ChartContainer>

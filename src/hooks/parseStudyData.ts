@@ -20,6 +20,7 @@ function parseCSV(content: string): StudyData[] {
       collaborators: parseCollaborators(values[13]),
       startISO: parseStartDate(values[22]),
       conditions: parseConditions(values[7]),
+      enrollment: parseInt(values[17]) || 0,
       source: StudySource.CLINICAL_TRIALS,
     };
 
@@ -155,6 +156,7 @@ function parseEUTrials(content: string): StudyData[] {
     let sponsor = '';
     let startDate = '';
     let conditions: string[] = [];
+    let enrollment = 0;
 
     for (const line of lines) {
       const trimmedLine = line.trim();
@@ -186,6 +188,11 @@ function parseEUTrials(content: string): StudyData[] {
           .replace('E.1.1 Medical condition(s) being investigated:', '')
           .trim();
         if (condition) conditions.push(condition);
+      } else if (trimmedLine.startsWith('F.4.1 In the member state:')) {
+        const enrollmentStr = trimmedLine
+          .replace('F.4.1 In the member state:', '')
+          .trim();
+        enrollment = parseInt(enrollmentStr) || 0;
       }
     }
 
@@ -200,6 +207,7 @@ function parseEUTrials(content: string): StudyData[] {
         collaborators: [],
         startISO: parseStartDate(startDate),
         conditions,
+        enrollment,
         source: StudySource.EUDRACT,
       };
       studies.push(study);

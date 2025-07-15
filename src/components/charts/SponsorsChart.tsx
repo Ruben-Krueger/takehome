@@ -56,7 +56,7 @@ export default function SponsorsChart() {
             width={200}
             tick={{ fontSize: 12 }}
           />
-          <Bar dataKey="count" fill="var(--color-count)" radius={4} />
+          <Bar dataKey="count" fill="#2563eb" radius={4} />
           <ChartTooltip content={<ChartTooltipContent />} />
         </BarChart>
       </ChartContainer>

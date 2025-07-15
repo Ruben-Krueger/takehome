@@ -1,7 +1,7 @@
 import { useFilters } from '@/contexts/FiltersContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,17 +10,58 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown, X } from 'lucide-react';
+import { Calendar } from './ui/calendar';
+import { Label } from 'recharts';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+
+function PopoverCalendar({
+  date,
+  onSelect,
+}: {
+  date: Date | undefined;
+  onSelect: (date: Date | undefined) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      <Label className="px-1">Select your stay</Label>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            id="dates"
+            className="w-56 justify-between font-normal"
+          >
+            {/* {range?.from && range?.to
+              ? `${range.from.toLocaleDateString()} - ${range.to.toLocaleDateString()}`
+              : 'Select date'}
+            <ChevronDownIcon /> */}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            captionLayout="dropdown"
+            onSelect={date => {
+              onSelect(date);
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
 
 export function FiltersPanel() {
   const { filters, setRegion, setConditionSearch, setDateRange, resetFilters } =
     useFilters();
 
-  const handleFromDateChange = (value: string) => {
+  const handleFromDateChange = (value: Date | undefined) => {
     const fromDate = value ? new Date(value) : undefined;
     setDateRange({ from: fromDate, to: filters.dateRange.to });
   };
 
-  const handleToDateChange = (value: string) => {
+  const handleToDateChange = (value: Date) => {
     const toDate = value ? new Date(value) : undefined;
     setDateRange({ from: filters.dateRange.from, to: toDate });
   };
@@ -102,20 +143,24 @@ export function FiltersPanel() {
               Date Range
             </label>
             <div className="flex gap-2">
-              <Input
-                type="date"
-                placeholder="From"
-                value={formatDate(filters.dateRange.from)}
-                onChange={e => handleFromDateChange(e.target.value)}
-                className="flex-1"
+              {/* <Calendar
+                mode="single"
+                selected={filters.dateRange.from}
+                onSelect={newDate => handleFromDateChange(newDate)}
+                className="rounded-lg border"
+              /> */}
+              <PopoverCalendar
+                onSelect={newDate => handleFromDateChange(newDate)}
+                date={filters.dateRange.from}
               />
-              <Input
+
+              {/* <Input
                 type="date"
                 placeholder="To"
                 value={formatDate(filters.dateRange.to)}
                 onChange={e => handleToDateChange(e.target.value)}
                 className="flex-1"
-              />
+              /> */}
             </div>
           </div>
 

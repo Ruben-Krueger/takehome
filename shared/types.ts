@@ -37,5 +37,9 @@ export type StudyData = {
 
   startISO: string;
 
+  /* Medical conditions associated with the study. */
   conditions: string[];
+
+  /* The number of study participants. */
+  enrollment: number;
 };
