@@ -30,7 +30,6 @@ function PopoverCalendar({
   return (
     <div className="flex flex-col ">
       <Popover>
-        <label className="text-sm font-medium text-gray-700">{label}</label>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
@@ -136,21 +135,25 @@ export function FiltersPanel() {
             />
           </div>
 
-          {/* Date Range */}
+          {/* Start date */}
           <div className="space-y-2">
-            <div className="flex gap-2">
-              <PopoverCalendar
-                onSelect={newDate => handleFromDateChange(newDate)}
-                date={filters.dateRange.from}
-                label="Start"
-              />
+            <label className="text-sm font-medium text-gray-700">Start</label>
+            <PopoverCalendar
+              onSelect={newDate => handleFromDateChange(newDate)}
+              date={filters.dateRange.from}
+              label="Start"
+            />
+          </div>
 
-              <PopoverCalendar
-                onSelect={newDate => handleToDateChange(newDate)}
-                date={filters.dateRange.to}
-                label="End"
-              />
-            </div>
+          {/* End date */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">End</label>
+
+            <PopoverCalendar
+              onSelect={newDate => handleToDateChange(newDate)}
+              date={filters.dateRange.to}
+              label="End"
+            />
           </div>
 
           <div className="flex flex-col justify-end">
