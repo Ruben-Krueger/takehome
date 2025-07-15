@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import {
   type ColumnDef,
@@ -12,16 +10,11 @@ import {
   useReactTable,
   type VisibilityState,
 } from '@tanstack/react-table';
-import { ArrowUpDown, ChevronDown } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { CardContent } from '@/components/ui/card';
+
 import { Input } from '@/components/ui/input';
 import {
   Table,
