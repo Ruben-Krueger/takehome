@@ -23,8 +23,9 @@ function App() {
               <main className="flex-1 py-8">
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/dashboard/:id" element={<Dashboard />} />
+
+                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/charts" element={<Charts />} />
                   <Route path="/search" element={<Search />} />
                 </Routes>

@@ -73,7 +73,7 @@ export default function Dashboard() {
   const [draggedWidget, setDraggedWidget] = useState<string | null>(null);
 
   const layoutId = id || currentLayoutId;
-  const layout = layouts.find(l => l.id === layoutId) || getCurrentLayout();
+  const layout = layouts.find(l => l.id === id) || getCurrentLayout();
 
   if (layoutId !== currentLayoutId) {
     setCurrentLayoutId(layoutId);

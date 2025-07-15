@@ -187,7 +187,7 @@ export function AllStudiesTable() {
               className="max-w-sm"
             />
           </div>
-          <div className="rounded-md border max-h-[500px] overflow-auto overflow-x-auto">
+          <div className="rounded-md border">
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map(headerGroup => (

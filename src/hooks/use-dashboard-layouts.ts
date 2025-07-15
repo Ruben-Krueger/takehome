@@ -97,9 +97,12 @@ export function useDashboardLayouts() {
     if (layoutId === 'default') return;
     const newLayouts = layouts.filter(layout => layout.id !== layoutId);
     saveLayouts(newLayouts);
+    console.log('delete', currentLayoutId, layoutId);
     if (currentLayoutId === layoutId) {
       setCurrentLayoutId('default');
+      return 'default';
     }
+    return currentLayoutId;
   };
 
   const addWidget = (layoutId: string, widget: ChartWidget) => {

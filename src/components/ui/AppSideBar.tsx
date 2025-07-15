@@ -7,7 +7,7 @@ import {
   Search,
 } from 'lucide-react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDashboardLayouts } from '@/hooks/use-dashboard-layouts';
 
 import {
@@ -22,6 +22,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
+  SidebarMenuAction,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import {
@@ -35,20 +36,27 @@ import {
 
 export default function AppSidebar() {
   const location = useLocation();
-  const { layouts, createLayout, deleteLayout } = useDashboardLayouts();
+  const { layouts, createLayout, deleteLayout, setCurrentLayoutId } =
+    useDashboardLayouts();
   const [newLayoutName, setNewLayoutName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [layoutToDelete, setLayoutToDelete] = useState<string | null>(null);
 
   const isOnDashboard = location.pathname.startsWith('/dashboard');
+  const navigate = useNavigate();
 
   const handleCreateLayout = () => {
-    if (newLayoutName.trim()) {
-      createLayout(newLayoutName.trim());
-      setNewLayoutName('');
-      setIsCreating(false);
-    }
+    if (!newLayoutName.trim()) return;
+    const newLayout = createLayout(newLayoutName.trim());
+    setNewLayoutName('');
+    setIsCreating(false);
+    setCurrentLayoutId(newLayout.id);
+
+    navigate(`/dashboard/${newLayout.id}`);
+
+    // A bit of a hack
+    window.location.reload();
   };
 
   const handleDeleteLayout = (layoutId: string, e: React.MouseEvent) => {
@@ -60,9 +68,14 @@ export default function AppSidebar() {
 
   const confirmDelete = () => {
     if (layoutToDelete) {
-      deleteLayout(layoutToDelete);
+      const newLayout = deleteLayout(layoutToDelete);
       setDeleteDialogOpen(false);
       setLayoutToDelete(null);
+
+      if (newLayout === 'default') {
+        navigate('/dashboard');
+        window.location.reload();
+      }
     }
   };
 
@@ -112,31 +125,25 @@ export default function AppSidebar() {
                     <SidebarMenuSub>
                       {layouts.map(layout => (
                         <SidebarMenuSubItem key={layout.id}>
-                          <div className="flex items-center justify-between w-full">
-                            <SidebarMenuSubButton asChild className="flex-1">
-                              <a
-                                href={
-                                  layout.isDefault
-                                    ? '/dashboard'
-                                    : `/dashboard/${layout.id}`
-                                }
-                              >
-                                <span className="text-black">
-                                  {layout.name}
-                                </span>
-                              </a>
-                            </SidebarMenuSubButton>
+                          <SidebarMenuSubButton asChild className="flex-1">
+                            <a
+                              href={
+                                layout.isDefault
+                                  ? '/dashboard'
+                                  : `/dashboard/${layout.id}`
+                              }
+                            >
+                              <span className="text-black">{layout.name}</span>
+                            </a>
+                          </SidebarMenuSubButton>
+                          <SidebarMenuAction>
                             {!layout.isDefault && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                              <X
+                                className="h-4 w-4"
                                 onClick={e => handleDeleteLayout(layout.id, e)}
-                              >
-                                <X className="h-4 w-4" />
-                              </Button>
+                              />
                             )}
-                          </div>
+                          </SidebarMenuAction>
                         </SidebarMenuSubItem>
                       ))}
 
