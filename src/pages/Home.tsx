@@ -6,7 +6,7 @@ export default function Home() {
         Get actionable insights from clinical trials
       </p>
       <p className="text-gray-500 text-base">
-        Select a page from the navigation above to get started
+        Select a page from the navigation on the left to get started
       </p>
     </div>
   );
